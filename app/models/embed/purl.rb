@@ -172,6 +172,18 @@ module Embed
         end
       end
 
+      def primary_file
+        files.find(:primary?).first
+      end
+
+      def thumbnail
+        files.find(:thumbnail?).first
+      end
+
+      def secondary_files
+        files.select(:secondary?)
+      end
+
       def non_thumbnail_files
         files.reject(&:thumbnail?)
       end
@@ -190,6 +202,14 @@ module Embed
 
         def title
           @file.attributes['id'].try(:value)
+        end
+
+        def primary?
+          Settings.primary_mimetypes[resource.type].include?(mimetype)
+        end
+
+        def secondary?
+          !primary? && !thumbnail?
         end
 
         def thumbnail

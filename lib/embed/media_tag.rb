@@ -19,15 +19,13 @@ module Embed
     def to_html
       output = ''
       purl_document.contents.each do |resource|
-        next unless primary_file?(resource)
-        resource.non_thumbnail_files.each do |file|
-          output << if SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
-                      media_element(file, resource.type)
-                    else
-                      previewable_element(file)
-                    end
-          self.file_index += 1
-        end
+        next unless primary_file?(resource) && resource.primary_file.present?
+        output << if SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
+                    media_element(resource.primary_file, resource.type)
+                  else
+                    previewable_element(resource.primary_file)
+                  end
+        self.file_index += 1
       end
       output
     end
