@@ -2,7 +2,7 @@ module Embed
   class Viewer
     require 'embed/viewer/common_viewer'
     # Auto-require all .rb files in the viewer directory
-    Dir[File.join(File.dirname(__FILE__), 'viewer', '*.rb')].each { |file| require file }
+    Dir[File.join(File.dirname(__FILE__), 'viewer', '*.rb')].each { |file| require file; puts file }
 
     delegate :height, :width, to: :viewer
     def initialize(request)
@@ -28,6 +28,8 @@ module Embed
 
     def registered_viewer
       @registered_type ||= Embed.registered_viewers.detect do |type_class|
+        puts type_class.inspect
+        puts tpe_class.supported_types.inspect
         type_class.supported_types.include?(@request.purl_object.type.to_sym)
       end
     end
