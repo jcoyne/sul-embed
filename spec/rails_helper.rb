@@ -18,7 +18,10 @@ Capybara.javascript_driver = :headless_chrome
 #       h/t @mjgiarlo
 Capybara.register_driver :headless_chrome do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w[headless disable-gpu no-sandbox window-size=1280,1696] }
+    chromeOptions: { args: %w[headless disable-gpu no-sandbox window-size=1280,1696] },
+    loggingPrefs: {
+      browser: 'ALL'
+    }
   )
 
   Capybara::Selenium::Driver.new(app,
@@ -41,6 +44,12 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 # ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure(&:infer_spec_type_from_file_location!)
+
+RSpec.configure do |config|
+  config.after :each, js: 'true' do
+    Capybara::Chromedriver::Logger::TestHooks.after_example!
+  end
+end
 
 def stub_purl_response_with_fixture(fixture)
   expect_any_instance_of(Embed::PURL).to receive(:response).at_least(:once).and_return(fixture)

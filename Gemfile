@@ -18,6 +18,7 @@ group :development, :test do
   gem 'capybara'
   gem 'chromedriver-helper'
   gem 'selenium-webdriver'
+  gem 'capybara-chromedriver-logger'
   gem 'high_voltage'
 
   # Coveralls gem for code coverage reporting
