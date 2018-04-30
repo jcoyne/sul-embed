@@ -16,7 +16,8 @@ gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5.2' # pinned for https://github.com/rspec/rspec-rails/issues/1800
   gem 'capybara'
-  gem 'poltergeist'
+  gem 'chromedriver-helper'
+  gem 'selenium-webdriver'
   gem 'high_voltage'
 
   # Coveralls gem for code coverage reporting

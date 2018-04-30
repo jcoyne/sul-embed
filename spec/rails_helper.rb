@@ -7,12 +7,24 @@ require 'fixtures/purl_fixtures'
 require 'fixtures/was_seed_thumbs_fixtures'
 require 'capybara/rails'
 require 'capybara/rspec'
-require 'capybara/poltergeist'
+require 'selenium-webdriver'
 
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, timeout: 60)
+Capybara.javascript_driver = :headless_chrome
+
+# @note In January 2018, TravisCI disabled Chrome sandboxing in its Linux
+#       container build environments to mitigate Meltdown/Spectre
+#       vulnerabilities, at which point sul-embed needs to use the --no-sandbox
+#       flag. https://github.com/travis-ci/docs-travis-ci-com/blob/c1da4af0b7ee5de35fa4490fa8e0fc4b44881089/user/chrome.md
+#       h/t @mjgiarlo
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w[headless disable-gpu no-sandbox window-size=1280,1696] }
+  )
+
+  Capybara::Selenium::Driver.new(app,
+                                 browser: :chrome,
+                                 desired_capabilities: capabilities)
 end
-Capybara.javascript_driver = :poltergeist
 
 Capybara.default_max_wait_time = 10
 # Requires supporting ruby files with custom matchers and macros, etc, in
