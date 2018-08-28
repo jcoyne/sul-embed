@@ -64,17 +64,23 @@
 
     return {
       init: function(providedSelector, options) {
+        console.log('Initted ThumbSlider');
         this.options = options;
         selector = providedSelector;
         appendSliderToFrame(this.scrollFrame());
+        console.log('Appended Slider');
         hideInitialSliderObjects();
+        console.log('Slider has been hidden');
         addToggleControlBehavior();
+        console.log('Added tooggle control behavior');
         return this;
       },
 
       options: {},
 
       addThumbnailsToSlider: function(thumbnails) {
+        console.log('Adding thumbs to slider ');
+        console.log(thumbnails);
         hidePanelIfNotMultiple(thumbnails);
         var _this = this;
 

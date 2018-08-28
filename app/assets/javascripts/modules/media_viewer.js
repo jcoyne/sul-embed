@@ -15,6 +15,7 @@
     var MAX_FILE_LABEL_LENGTH = 45;
 
     function restrictedTextMarkup(isLocationRestricted) {
+      console.log('in restrictedTextMarkup');
       if(isLocationRestricted) {
         return '<span class="sul-embed-location-restricted-text">' + restrictedText + '</span> ';
       } else {
@@ -23,6 +24,7 @@
     }
 
     function stanfordOnlyScreenreaderText(isStanfordRestricted) {
+      console.log('In stanfordOnlyScreenreaderText');
       if(isStanfordRestricted) {
         return '<span class="sul-embed-text-hide">Stanford only</span>';
       }else{
@@ -31,6 +33,7 @@
     }
 
     function durationMarkup(duration) {
+      console.log('in durationMarkup with: ' + duration);
       if(duration && duration.length > 0) {
         return ' (' + duration + ')';
       } else {
@@ -46,13 +49,19 @@
     }
 
     function truncateWithEllipsis(text, maxLen) {
+      console.log('in truncateWithEllipsis with: ' + text + ' and: ' + maxLen);
+      console.log(typeof text);
+      console.log(text.length);
+      console.log(text.substr(0, maxLen - 1) + (text.length > maxLen ? '&hellip;' : ''));
       return text.substr(0, maxLen - 1) + (text.length > maxLen ? '&hellip;' : '');
     }
 
     function thumbsForSlider() {
+      console.log('In thumbsForSlider');
       var thumbs = [];
       var sliderSelector = '.sul-embed-media ' + sliderObjectSelector;
       jQuery(sliderSelector).each(function(index, mediaDiv) {
+        console.log("In media div " + index);
         var mediaObject = $(mediaDiv).find('audio, video');
         var cssClass;
         if(mediaObject.prop('tagName') === 'AUDIO') {
@@ -65,14 +74,14 @@
         if (index === 0) {
           activeClass = 'active';
         }
-
+        console.log('active class figued out');
         var thumbClass = 'sul-embed-slider-thumb sul-embed-media-slider-thumb ';
         var labelClass = 'sul-embed-thumb-label';
         var isStanfordRestricted = $(mediaDiv).data('stanford-only');
         if (isStanfordRestricted) {
           labelClass += ' sul-embed-thumb-stanford-only';
         }
-
+        console.log('restricted figued out: ' + isStanfordRestricted);
         var thumbnailIcon = '';
         var thumbnailUrl = $(mediaDiv).data('thumbnail-url');
         if (thumbnailUrl !== '') {
@@ -81,9 +90,12 @@
           thumbnailIcon = '<i class="' + cssClass + '"></i>';
         }
 
+        console.log('thumbnail figured out: ' + thumbnailIcon);
+
         var isLocationRestricted = $(mediaDiv).data('location-restricted');
         var fileLabel = $(mediaDiv).data('file-label');
         var duration = $(mediaDiv).data('duration');
+        console.log('about to push a thumb');
         thumbs.push(
           '<li class="' + thumbClass + activeClass + '">' +
             thumbnailIcon +
@@ -95,8 +107,10 @@
             '</a>' +
           '</li>'
         );
+        console.log('pushed a thumb');
       });
-
+      console.log("Returning thumbs from thumbsInSlider");
+      console.log(thumbs);
       return thumbs;
     }
 
