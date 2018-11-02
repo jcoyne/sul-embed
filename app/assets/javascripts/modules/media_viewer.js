@@ -171,6 +171,7 @@
     // will attempt to play an HLS MP3 stream simply because
     // it is HLS, even though it is not able to do so.
     function removeUnusableSources(mediaObject) {
+      console.log('Going to remove unusable sources for flash? ' + mustUseFlash(mediaObject));
       if(mustUseFlash(mediaObject)) {
         mediaObject
           .find('source[type="application/x-mpegURL"]')
@@ -196,10 +197,12 @@
       removeUnusableSources(mediaObject);
       mediaObject.addClass('video-js vjs-default-skin');
       mediaObject.show();
+      console.log('About to initialize videoJS');
       videojs(mediaObject.attr('id'), videoJsOptions(mediaObject));
     }
 
     function authCheckForMediaObject(mediaObject, completeCallback) {
+      console.log("authCheckForMediaObject was just called");
       var authUrl = mediaObject.data('auth-url');
       jQuery.ajax({url: authUrl, dataType: 'jsonp'}).done(function(data) {
         // present the auth link if it's stanford restricted and the user isn't logged in
@@ -220,6 +223,7 @@
         }
 
         if(data.status === 'success') {
+          console.log("About to update Media SRC w/ token: " + data.token);
           updateMediaSrcWithToken(mediaObject, data.token);
           initializeVideoJSPlayer(mediaObject);
         }
