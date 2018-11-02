@@ -151,7 +151,7 @@
     function ms10Browser() {
       var fingerprinter = new ClientJS();
       var browser = fingerprinter.getBrowser();
-      return (((browser.toLowerCase() === 'edge') || (browser.toLowerCase() === 'ie')) &&
+      return (((browser.toLowerCase() === 'ie')) &&
               fingerprinter.getOS().toLowerCase() === 'windows');
     }
 
