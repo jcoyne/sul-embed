@@ -5,6 +5,7 @@
 
 .#{$namespace}-media {
   display: flex;
+  flex-direction: column;
   min-height: 175px;
   overflow-y: hidden !important;
   position: relative;
@@ -23,6 +24,10 @@
       padding-bottom: $sul-media-index-height;
     }
   }
+}
+
+.#{$namespace}-media-object {
+  flex: 1 0 100%;
 }
 
 .#{$namespace}-media-wrapper {
