@@ -58,9 +58,9 @@ describe Embed::Viewer::File do
         expect(file_viewer.send(:default_height)).to eq 323
       end
 
-      it 'reduces the height based on the number of files in the object (1 file)' do
+      it 'reduces the height based on the number of files in the object (1 file), but no lower than our min height' do
         stub_purl_response_and_request(file_purl, request)
-        expect(file_viewer.send(:default_height)).to eq 122
+        expect(file_viewer.send(:default_height)).to eq 189
       end
 
       it 'reduces the height based on the number of files in the object (2 files)' do
