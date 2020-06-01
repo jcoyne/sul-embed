@@ -29,7 +29,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.7'
 
   gem 'selenium-webdriver', '!= 3.13.0'
-  gem 'webdrivers'
+  gem 'webdrivers', '!= 4.4.0'
 
   # Teaspoon-jasmine is a wrapper for the Jasmine javascript testing library
   gem 'teaspoon', github: 'jejacks0n/teaspoon'
